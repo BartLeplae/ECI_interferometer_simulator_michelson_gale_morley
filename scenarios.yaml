@@ -1,0 +1,107 @@
+scenarios:
+  - name: "SCENARIO 1a: Michelson-Gale: No Earth rotation + No Drift Vector"
+    lat_deg: 41.76666666666667
+    dist_AD: 339.2424
+    dist_AF: 612.648
+    angle_AD_AF: 90.0
+    wavelength: 570e-9
+    earth_rotation: false
+    drift_vector: [0.0, 0.0]
+    print_mode: "mg"
+    generate_graph: false
+    generate_setup_plot: true
+    setup_plot_type: "mg"
+
+  - name: "SCENARIO 1b (as expected): Michelson-Gale: Earth rotation + No Drift Vector"
+    lat_deg: 41.76666666666667
+    dist_AD: 339.2424
+    dist_AF: 612.648
+    angle_AD_AF: 90.0
+    wavelength: 570e-9
+    earth_rotation: true
+    drift_vector: [0.0, 0.0]
+    print_mode: "mg"
+    generate_graph: false
+    generate_setup_plot: false
+    setup_plot_type: "mg"
+
+  - name: "SCENARIO 1c: Michelson-Gale: Earth rotation + Drift Vector"
+    lat_deg: 41.76666666666667
+    dist_AD: 339.2424
+    dist_AF: 612.648
+    angle_AD_AF: 90.0
+    wavelength: 570e-9
+    earth_rotation: true
+    drift_vector: [30000.0, 0.0]
+    print_mode: "mg"
+    generate_graph: false
+    generate_setup_plot: false
+    setup_plot_type: "mg"
+
+  - name: "SCENARIO 2a (as expected): Michelson-Morley: Earth rotation + No Drift Vector"
+    lat_deg: 41.5
+    dist_AD: 11
+    dist_AF: 11
+    angle_AD_AF: 90.0
+    wavelength: 590e-09
+    earth_rotation: true
+    drift_vector: [0.0, 0.0]
+    print_mode: "mm"
+    generate_graph: true
+    generate_setup_plot: true
+    setup_plot_type: "mm"
+
+  - name: "SCENARIO 2b: Michelson-Morley: No Earth rotation + Drift Vector"
+    lat_deg: 41.5
+    dist_AD: 11
+    dist_AF: 11
+    angle_AD_AF: 90.0
+    wavelength: 590e-09
+    earth_rotation: false
+    drift_vector: [30000.0, 0.0]
+    print_mode: "mm"
+    generate_graph: true
+    generate_setup_plot: false
+    setup_plot_type: "mm"
+
+  - name: "SCENARIO 2c: Michelson-Morley: Earth rotation + Drift Vector"
+    lat_deg: 41.5
+    dist_AD: 11
+    dist_AF: 11
+    angle_AD_AF: 90.0
+    wavelength: 590e-09
+    earth_rotation: true
+    drift_vector: [30000.0, 0.0]
+    print_mode: "mm"
+    generate_graph: true
+    generate_setup_plot: false
+    setup_plot_type: "mm"
+
+
+
+  - name: "SCENARIO 3a: Einstein telescope; Earth doesn't rotate"
+    lat_deg: 50.7542
+    dist_AD: 10000.0
+    dist_AF: 10000.0
+    angle_AD_AF: 60.0
+    wavelength: 1.55e-06
+    earth_rotation: false
+    drift_vector: [0.0, 0.0]
+    print_mode: "mm"
+    generate_graph: false
+    generate_setup_plot: true
+    setup_plot_type: "mm"
+
+  - name: "SCENARIO 3b (as expected): Einstein telescope; Earth rotates"
+    lat_deg: 50.7542
+    dist_AD: 10000.0
+    dist_AF: 10000.0
+    angle_AD_AF: 60.0
+    wavelength: 1.55e-06
+    earth_rotation: true
+    drift_vector: [0.0, 0.0]
+    print_mode: "mm"
+    generate_graph: false
+    generate_setup_plot: false
+    setup_plot_type: "mm"
+

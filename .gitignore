@@ -1,0 +1,11 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Generated output images
+plot_scenario_*.png
+setup_scenario_*.png
+
+# OS generated files
+.DS_Store
+Thumbs.db
