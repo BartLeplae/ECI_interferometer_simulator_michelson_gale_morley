@@ -51,4 +51,9 @@ Depending on your YAML configuration, this report will include:
 * Calculated Distance Differences (nm)
 * Total Fringe Shifts
 * 2D Overhead Apparatus Schematics
+
+<img src="Michelson-Gale-Setup.png" alt="Interferometer Schematic" width="600">
+
 * 360-Degree Kinematic Rotation Graphs
+
+<img src="Michelson-Morley-hypothesis.png" alt="Interferometer Rotation Plot" width="600">
