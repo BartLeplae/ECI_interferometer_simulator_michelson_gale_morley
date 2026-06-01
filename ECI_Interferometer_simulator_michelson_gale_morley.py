@@ -255,10 +255,25 @@ def run_interferometer_physics(lat_deg, d_AD, d_AF, angle_AD_AF, orientation_deg
 
     t_A_F = time_of_flight('A', 'F', Decimal('0'))
     t_AFA = t_A_F + time_of_flight('F', 'A', t_A_F)
+    
+    # --- Execute Time Dilation / Moving vs Stationary Baseline Calculations ---
+    # Theoretical rest time (distance traveled straight without ECI movement)
+    t_ADA_stat = (d_AD * Decimal('2')) / c
+    t_AFA_stat = (d_AF * Decimal('2')) / c
+
+    # Calculate actual starting velocity of Node A in ECI
+    v_rot_A = Vec3(-node_A_ecef.y * omega, node_A_ecef.x * omega, Decimal('0'))
+    v_eci_A = v_rot_A + V_drift_eci
+    v_mag = v_eci_A.magnitude()
 
     return {
         'MG_time': t_CCW - t_CW,
-        'MM_time': t_AFA - t_ADA
+        'MM_time': t_AFA - t_ADA,
+        't_ADA': t_ADA,
+        't_AFA': t_AFA,
+        't_ADA_stat': t_ADA_stat,
+        't_AFA_stat': t_AFA_stat,
+        'v_eci': v_mag
     }
 
 # ---------------------------------------------------------
@@ -281,6 +296,7 @@ def process_scenario(config, scenario_index):
     generate_graph = config.get("generate_graph", False)
     generate_setup_plot = config.get("generate_setup_plot", False)
     setup_plot_type = config.get("setup_plot_type", "mg").lower()
+    calculate_time_dilation = config.get("calculate_time_dilation", False)
     
     drift_v, drift_angle_deg = drift_vector
     wl = Decimal(wavelength)
@@ -316,6 +332,32 @@ def process_scenario(config, scenario_index):
             f"Time Diff:      {res['MM_time'] * Decimal('1e9'):.10f} ns",
             f"Distance Diff:  {delta_d_MM * Decimal('1e9'):.10f} nm",
             f"Fringe Shift:   {delta_d_MM / wl:.10f} fringes"
+        ])
+
+    if calculate_time_dilation and print_mode in ["both", "mm"]:
+        v_eci = res['v_eci']
+        beta = v_eci / c
+        gamma = Decimal('1') / (Decimal('1') - beta**2).sqrt()
+        
+        # Calculate % difference = (Moving / Stationary - 1) * 100
+        pct_AD = (res['t_ADA'] / res['t_ADA_stat'] - Decimal('1')) * Decimal('100')
+        pct_AF = (res['t_AFA'] / res['t_AFA_stat'] - Decimal('1')) * Decimal('100')
+        
+        pct_gamma = (gamma - Decimal('1')) * Decimal('100')
+        pct_gamma_sq = (gamma**2 - Decimal('1')) * Decimal('100')
+        
+        output_text.extend([
+            "\n--- Time Dilation Analysis (ECI Frame) ---",
+            "Formulas applied for theoretical comparison:",
+            "  gamma = 1 / sqrt(1 - (v/c)^2)",
+            "  Transverse Diff %   = (gamma - 1) * 100",
+            "  Longitudinal Diff % = (gamma^2 - 1) * 100",
+            "------------------------------------------",
+            f"Apparatus ECI Velocity:            {v_eci:.4f} m/s",
+            f"Arm A-D (Moving vs Stat):          {pct_AD:.15f} %",
+            f"Arm A-F (Moving vs Stat):          {pct_AF:.15f} %",
+            f"Theoretical Transverse (gamma):    {pct_gamma:.15f} %",
+            f"Theoretical Longitudinal (gamma^2):{pct_gamma_sq:.15f} %"
         ])
 
     setup_filename = None

@@ -50,6 +50,7 @@ scenarios:
     generate_graph: true
     generate_setup_plot: true
     setup_plot_type: "mm"
+    calculate_time_dilation: true
 
   - name: "SCENARIO 2b: Michelson-Morley: No Earth rotation + Drift Vector"
     lat_deg: 41.5
@@ -63,8 +64,9 @@ scenarios:
     generate_graph: true
     generate_setup_plot: false
     setup_plot_type: "mm"
+    calculate_time_dilation: true
 
-  - name: "SCENARIO 2c: Michelson-Morley: Earth rotation + Drift Vector"
+  - name: "SCENARIO 2c: Michelson-Morley: Earth rotation + 30km/s Drift Vector"
     lat_deg: 41.5
     dist_AD: 11
     dist_AF: 11
@@ -76,8 +78,21 @@ scenarios:
     generate_graph: true
     generate_setup_plot: false
     setup_plot_type: "mm"
+    calculate_time_dilation: true
 
-
+  - name: "SCENARIO 4: MM Experiment Moving West on a Train"
+    lat_deg: 41.5
+    dist_AD: 11
+    dist_AF: 11
+    angle_AD_AF: 90.0
+    wavelength: 590e-09
+    earth_rotation: true
+    drift_vector: [100.0, 180.0]     # <--- 100 m/s at 180 degrees (West)
+    print_mode: "mm"
+    generate_graph: false
+    generate_setup_plot: false
+    setup_plot_type: "mm"
+    calculate_time_dilation: true
 
   - name: "SCENARIO 3a: Einstein telescope; Earth doesn't rotate"
     lat_deg: 50.7542
@@ -105,3 +120,15 @@ scenarios:
     generate_setup_plot: false
     setup_plot_type: "mm"
 
+  - name: "SCENARIO 3c (on Equator): Einstein telescope; Earth rotates"
+    lat_deg: 0
+    dist_AD: 10000.0
+    dist_AF: 10000.0
+    angle_AD_AF: 60.0
+    wavelength: 1.55e-06
+    earth_rotation: true
+    drift_vector: [0.0, 0.0]
+    print_mode: "mm"
+    generate_graph: false
+    generate_setup_plot: false
+    setup_plot_type: "mm"
